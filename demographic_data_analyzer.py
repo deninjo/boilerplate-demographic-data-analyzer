@@ -37,12 +37,13 @@ def calculate_demographic_data(print_data=True):
     min_hrs = df[df['hours-per-week'] == df['hours-per-week'].min()]
     num_min_workers = (((min_hrs['salary'] == '>50K').sum()/df['salary'].count())*100).round(1)
 
-    rich_percentage = (((df['salary'] == ">50K").sum()/df['salary'].count())*100).round(1)
+    # Percentage of rich among those who work fewest hours
+    min_hrs = df[df['hours-per-week'] == df['hours-per-week'].min()]
+    rich_percentage = (((min_hrs['salary'] == '>50K').sum()/df['salary'].count())*100).round(1)
 
     # What country has the highest percentage of people that earn >50K?
     high_sal = df[df['salary'] == '>50K']
-    high_sal = pd.DataFrame(high_sal['native-country'].value_counts())
-    highest_earning_country = high_sal.index[0]
+    highest_earning_country = pd.DataFrame(high_sal['native-country'].value_counts()).index[0]
     highest_earning_country_percentage = (((high_sal['native-country'].value_counts().max())/high_sal['native-country'].count())*100).round(1)
 
 
